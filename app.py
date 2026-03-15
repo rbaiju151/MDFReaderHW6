@@ -27,8 +27,22 @@ if uploaded_file is not None:
             file_bytes = io.BytesIO(uploaded_file.read())
             mdf = MDF(file_bytes)
             
-            # Convert to Pandas DataFrame (asammdf natively supports this)
-            df = mdf.to_dataframe(raster=0.5, reduce_memory_usage=True)
+            # --- UPDATE STARTS HERE ---
+            # 1. Inspect signals and keep only those with non-zero data
+            active_channels = []
+            for signal in mdf.iter_channels():
+                if signal.samples.any():
+                    active_channels.append(signal.name)
+            
+            # 2. Convert to DataFrame (using only active channels + your memory savers)
+            df = mdf.to_dataframe(
+                channels=active_channels,
+                raster=0.5, 
+                reduce_memory_usage=True,
+                empty_channels='skip'
+            )
+            # --- UPDATE ENDS HERE ---
+            
             # The timebase is usually the index; let's make it a standard column
             df.reset_index(inplace=True)
             df.rename(columns={'timestamps': 'Time'}, inplace=True)
