@@ -28,7 +28,7 @@ if uploaded_file is not None:
             mdf = MDF(file_bytes)
             
             # Convert to Pandas DataFrame (asammdf natively supports this)
-            df = mdf.to_dataframe()
+            df = mdf.to_dataframe(raster=0.5, reduce_memory_usage=True)
             # The timebase is usually the index; let's make it a standard column
             df.reset_index(inplace=True)
             df.rename(columns={'timestamps': 'Time'}, inplace=True)
