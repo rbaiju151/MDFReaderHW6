@@ -1,3 +1,5 @@
+Using Gemini Pro
+
 Prompt 1: Today we are going to explore building a database app using SQL. I want to implement all 4 CRUD operations and have a simple Streamlit front end. The idea for the app is to take inputs of mdf files, use the asammdf module to format the data into sql, view and edit data on the front end, and package it back into an mdf file. Can you restate the project requirements and ask any necessary questions?
 
 Response 1: Gemini said
